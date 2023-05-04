@@ -75,11 +75,12 @@ namespace PoolSystem
             /// <summary>
             /// 自身のID
             /// </summary>
-            public int ID { get; }
+            int ID { get; }
             /// <summary>
             /// オブジェクト
             /// </summary>
-            public PooledObject Object { get; }
+            PooledObject Object { get; }
+            MemoryType Memory { get; }
         }
 
         //========================================================
