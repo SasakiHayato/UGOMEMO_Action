@@ -80,7 +80,6 @@ namespace PoolSystem
             /// オブジェクト
             /// </summary>
             PooledObject Object { get; }
-            MemoryType Memory { get; }
         }
 
         //========================================================
