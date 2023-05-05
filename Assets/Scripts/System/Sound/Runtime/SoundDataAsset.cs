@@ -84,6 +84,7 @@ public class SoundDataAsset : ScriptableObject
         float IReadOnlySoundData.Pitch => _pitch;
     }
 
+    [SerializeField, ReadOnly] Define.Sound.Type _soundType;
     [SerializeField] List<Data> _soundDataList;
 
     //=======================================================
@@ -106,6 +107,16 @@ public class SoundDataAsset : ScriptableObject
         }
 
         _soundDataList.Add(new Data(clip, address));
+    }
+
+    /// <summary>
+    /// サウンドタイプの指定.
+    /// Editor上で作成したデータを入れ込むためなので、他では呼ばない.
+    /// </summary>
+    /// <param name="sound_type"></param>
+    public void SetSoundType(Define.Sound.Type sound_type)
+    {
+        _soundType = sound_type;
     }
 
     #endif

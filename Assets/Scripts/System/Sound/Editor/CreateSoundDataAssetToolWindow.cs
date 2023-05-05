@@ -71,7 +71,9 @@ public class CreateSoundDataAssetToolWindow : EditorWindow
         
         if (_createSoundDataList != null) 
             _createSoundDataList.ForEach(data => asset.CreateData(data.Clip, data.Address));
-        
+
+        asset.SetSoundType(_soundType);
+
         if (_name == "") _name = "New_Sound_Data_Asset";
         
         var path = "Assets/Data/Sound";
