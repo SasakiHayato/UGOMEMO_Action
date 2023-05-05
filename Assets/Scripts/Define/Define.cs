@@ -1,16 +1,5 @@
 public static class Define
 {
-    public enum ObjectType
-    {
-        Player,
-        Enemy,
-        Obstacle,
-
-        Item,
-
-        None,
-    }
-
     public static class UI
     {
         public enum Type
@@ -34,5 +23,32 @@ public static class Define
         public static float RADIUS = 0.05F;
         public static float FLICK_ATTRIBUTE_TIME = 0.15F;
         public static float FLICK_ATTRIBUTE_DISTANCE = 2.25F;
+    }
+
+    public static class Sound
+    {
+        public enum Type
+        {
+            BGM,
+            SE,
+            Environment,
+
+            Length,
+        }
+
+        public static string CLIP_DIRECTORY_GUID = "ddffd68275303554ab00fb88aa3ea584";
+        public static string ADDRESS_TEXT_GUID = "0bd26e639ee380f42a6e2aac7808099e";
+        public static string SOUND_ADDRESS_GUID = "6d28f0e86ba601649b447b1fc2276ce7";
+    }
+
+    public enum ObjectType
+    {
+        Player,
+        Enemy,
+        Obstacle,
+
+        Item,
+
+        None,
     }
 }
