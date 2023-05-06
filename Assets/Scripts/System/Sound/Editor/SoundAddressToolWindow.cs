@@ -20,12 +20,12 @@ public class SoundAddressToolWindow : EditorWindow
 
     private void GenerateAddress()
     {
-        var address_text_asset_path = AssetDatabase.GUIDToAssetPath(Define.Sound.ADDRESS_TEXT_ASSET_GUID);
+        var address_text_asset_path = AssetDatabase.GUIDToAssetPath(Editor.Sound.ADDRESS_TEXT_FILE_GUID);
         var address_text_asset = AssetDatabase.LoadAssetAtPath<TextAsset>(address_text_asset_path);
 
         var address_list = address_text_asset.text.Split(",\n").Where(address => address != "");
 
-        var clip_directory_path = AssetDatabase.GUIDToAssetPath(Define.Sound.CLIP_DIRECTORY_GUID);
+        var clip_directory_path = AssetDatabase.GUIDToAssetPath(Editor.Sound.CLIP_DIRECTORY_GUID);
         var string_builder = new StringBuilder();
         var clip_address_list = Directory
             .GetFiles(clip_directory_path, "*", SearchOption.AllDirectories)
@@ -51,7 +51,7 @@ public class SoundAddressToolWindow : EditorWindow
 
     private void DeleteAddress()
     {
-        var address_text_asset_path = AssetDatabase.GUIDToAssetPath(Define.Sound.ADDRESS_TEXT_ASSET_GUID);
+        var address_text_asset_path = AssetDatabase.GUIDToAssetPath(Editor.Sound.ADDRESS_TEXT_FILE_GUID);
         var address_text_asset = AssetDatabase.LoadAssetAtPath<TextAsset>(address_text_asset_path);
 
         var address_list = address_text_asset.text.Split(",\n")
@@ -69,11 +69,11 @@ public class SoundAddressToolWindow : EditorWindow
 
     private void ApplyAddress()
     {
-        var address_text_asset_path = AssetDatabase.GUIDToAssetPath(Define.Sound.ADDRESS_TEXT_ASSET_GUID);
-        var address_text_asset = AssetDatabase.LoadAssetAtPath<TextAsset>(address_text_asset_path);
-        var address_text_list = address_text_asset.text.Split(",\n").Where(address => address != "").ToList();
+        var address_text_file_path = AssetDatabase.GUIDToAssetPath(Editor.Sound.ADDRESS_TEXT_FILE_GUID);
+        var address_text_file = AssetDatabase.LoadAssetAtPath<TextAsset>(address_text_file_path);
+        var address_text_fli_list = address_text_file.text.Split(",\n").Where(address => address != "").ToList();
 
-        var address_csharp_path = AssetDatabase.GUIDToAssetPath(Define.Sound.ADDRESS_CSHARP_GUID);
+        var address_csharp_path = AssetDatabase.GUIDToAssetPath(Editor.Sound.ADDRESS_CSHARP_GUID);
 
         var encode = Encoding.GetEncoding("UTF-8"); 
         using (var stream_writer = new StreamWriter(address_csharp_path, false, encode))
@@ -93,9 +93,9 @@ public class SoundAddressToolWindow : EditorWindow
             string_builder.Append("public enum SoundAddress\n");
             string_builder.Append("{\n");
 
-            if (address_text_list.Count > 0)
+            if (address_text_fli_list.Count > 0)
             {
-                address_text_list.ForEach(address => string_builder.Append($"    {address},\n"));
+                address_text_fli_list.ForEach(address => string_builder.Append($"    {address},\n"));
             }
 
             string_builder.Append("    None,\n");
