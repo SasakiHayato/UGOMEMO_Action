@@ -1,3 +1,6 @@
+/// <summary>
+/// プロジェクトの定義クラス
+/// </summary>
 public static class Define
 {
     public static class UI
@@ -35,10 +38,10 @@ public static class Define
 
             Length,
         }
+        
+        public static string SOUNDER_RESOURCE_PATH = "Sound/Pre_Sounder";
 
-        public static string CLIP_DIRECTORY_GUID = "ddffd68275303554ab00fb88aa3ea584";
-        public static string ADDRESS_TEXT_GUID = "0bd26e639ee380f42a6e2aac7808099e";
-        public static string SOUND_ADDRESS_GUID = "6d28f0e86ba601649b447b1fc2276ce7";
+        public static float MAX_VOLUME = 1;
     }
 
     public enum ObjectType

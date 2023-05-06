@@ -50,29 +50,14 @@ public class SoundDataAsset : ScriptableObject
         // variable
         //=======================================================
 
+        [SerializeField, ReadOnly] SoundAddress _address;
         [SerializeField] AudioClip _audioClip;
-        [SerializeField] SoundAddress _address;
         [SerializeField, Range(0, 1)] private float _volume;
         [SerializeField, Range(-3, 3)] private float _pitch;
 
         //=======================================================
         // constructor
         //=======================================================
-
-        #if UNITY_EDITOR
-
-        /// <summary>
-        /// データ生成用の初期化
-        /// </summary>
-        /// <param name="clip"></param>
-        /// <param name="address"></param>
-        public Data(AudioClip clip, SoundAddress address)
-        {
-            _audioClip = clip;
-            _address = address;
-        }
-
-        #endif
 
         //=======================================================
         // IReadOnlySoundData interface
@@ -82,31 +67,42 @@ public class SoundDataAsset : ScriptableObject
         SoundAddress IReadOnlySoundData.Address => _address;
         float IReadOnlySoundData.Volume => _volume;
         float IReadOnlySoundData.Pitch => _pitch;
+
+        #if UNITY_EDITOR
+        public void SetSoundAddress(SoundAddress address)
+        {
+            _address = address;
+        }
+        #endif
     }
 
+    [SerializeField, ReadOnly] string _guid;
     [SerializeField, ReadOnly] Define.Sound.Type _soundType;
     [SerializeField] List<Data> _soundDataList;
+
+    public Define.Sound.Type SoundType => _soundType;
+    public IReadOnlySoundData GetData(SoundAddress address)
+    {
+        for (int index = 0; index < _soundDataList.Count; index++)
+        {
+            var data = _soundDataList[index] as IReadOnlySoundData;
+            if (data.Address == address)
+            {
+                return data;
+            }
+        }
+
+        return null;
+    }
 
     //=======================================================
     // editor method
     //=======================================================
 
     #if UNITY_EDITOR
-
-    /// <summary>
-    /// データ作成時の処理.
-    /// Editor上で作成したデータを入れ込むためなので、他では呼ばない.
-    /// </summary>
-    /// <param name="clip"></param>
-    /// <param name="address"></param>
-    public void CreateData(AudioClip clip, SoundAddress address)
+    public void SetGUID(string guid)
     {
-        if (_soundDataList == null)
-        {
-            _soundDataList = new List<Data>();
-        }
-
-        _soundDataList.Add(new Data(clip, address));
+        _guid = guid;
     }
 
     /// <summary>
@@ -119,5 +115,24 @@ public class SoundDataAsset : ScriptableObject
         _soundType = sound_type;
     }
 
+    public void Save()
+    {
+        if (_soundDataList == null) return;
+        if (_soundDataList.Count == 0) return;
+
+        _soundDataList.ForEach(data => 
+        {
+            var read_only_data = data as IReadOnlySoundData;
+            for (int index = 0; index < (int)SoundAddress.Length; index++)
+            {
+                var address = (SoundAddress)index;
+                if (address.ToString() == read_only_data.Clip.name)
+                {
+                    data.SetSoundAddress(address);
+                    break;
+                }
+            }
+        });
+    }
     #endif
 }

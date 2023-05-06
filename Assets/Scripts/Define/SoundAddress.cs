@@ -4,7 +4,7 @@
 
 /// <summary>
 /// サウンドデータのアドレス
-/// </summary>
+/// <summary>
 public enum SoundAddress
 {
     None,
