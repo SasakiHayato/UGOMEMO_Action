@@ -1,45 +1,49 @@
-<h1>サウンドデータの作成について</h1>
-<pre>
-  Tools/Sound/
-          ├ CreateAddress/
-          ├ CreateDataAsset/
-</pre>
-<h3>CreateAddressWindowについて</h3>
-<p>Add Address - アドレスの発行</p>
-<pre>
-  Assets/Sound/
-          ├ BGM/
-          ├ Environment/
-          ├ SE/
-</pre>
-<p>上記、図に保存されているサウンドクリップと同名のアドレスを発行します。</p>
-<p>Applyすることで、サウンドアドレス用.csが自動生成されます</p>
+<h1>サウンドデータアセットツールのついて</h1>
+<p>Tools/Soundについてのwiki<p>
 <hr>
-<p>Delete Address Text - アドレス反映用テキストファイルの削除</p>
+<h3>アドレスツール</h3>
+<p>Tools/Sound/AddressTool</p>
+<p>図１</p>
 <pre>
-  Assets/Sound/
-          ├ Data/SoundAddress.txt
+　Assets/
+    ├ MasterData/
+    ├     ├ Sound/SoundAddress.txt
+    ├
+    ├ Scripts/
+          ├ Define/SoundAddress.cs
 </pre>
-<p>上記、図に保存されているアドレス反映用テキスト内を削除します。</p>
-<hr>
-<p>Delete Address Csharp - 反映されているアドレスの削除</p>
+<p>図２</p>
 <pre>
-  Assets/Scripts/
-           ├ Define/SoundAddress.cs
+  Assets/Data/
+          ├ Sound/
+              ├ Clip/
 </pre>
-<p>上記、図に保存されている発行されたアドレス内を削除します。</p>
-<hr>
-<h3>CreateDataAssetWindowについて</h3>
-<p>Create Asset - サウンドデータ用のScriptableObjectの生成</p>
+<h4>Generate Address</h4>
+<p>図１に図２と同名のアドレスを作成する。</p>
+<h4>Delete Address</h4>
+<p>図１のアドレスの削除を行う</p>
+<h3>編集ツール</h3>
+<p>Tool/Sound/Setting</p>
+<p>図１</p>
 <pre>
-  Asset/Data/
-         ├ Sound/
+  Assets/Data/
+          ├ Sound/
+              ├ DataAsset/
 </pre>
-<p>上記、図の中に保存されます。ディレクトリがない場合は自動生成されます。</p>
-<hr>
-<p>Sound Data Name - ファイル名の指定。</p>
-<p>Sound Type - サウンドデータのタイプ指定</p>
-<p>Clip Count - データ生成時に初期で入れ込むサウンドデータ個数</p>
-<p>Sound Address - サウンドデータのアドレスを指定</p>
-<p>Clip - サウンドデータのソース</p>
+<h4>Manage - Generate Asset Data Window</h4>
+<ol>
+  <li>Data Asset File Name      - ファイル名の指定</li>
+  <li>Sound Type                - サウンドタイプの指定</li>
+  <li>Generate Sound Data Asset - 図１にサウンドデータアセットを作成</li>
+</ol>
+<h4>Manage - Delete Data Asset Window</h4>
+<ol>
+  <li>Sound Data Asset Name   - 図１から削除するサウンドデータアセットのファイル名を指定</li>
+  <li>Delete Sound Data Asset - 指定したサウンドデータアセットを削除申請</li>
+</ol>
+<h4>Edit - Edit Data Asset Window</h4>
+<ol>
+  <li>Sound Data Asset - 編集するサウンドデータアセットの指定</li>
+  <li>Option - 現在はセーブ機能のみ</li>
+</ol>
 <hr>
