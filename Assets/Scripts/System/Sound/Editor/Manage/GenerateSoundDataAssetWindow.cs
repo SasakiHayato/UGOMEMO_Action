@@ -1,19 +1,37 @@
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using UnityEngine.UIElements;
-using UnityEditor.UIElements;
 using System.IO;
-using System;
-using DG.Tweening.Plugins.Core.PathCore;
+using UnityEngine;
+using UnityEngine.UIElements;
+using UnityEditor;
+using UnityEditor.UIElements;
 
+
+/// <summary>
+/// サウンドデータアセットの生成Windowクラス
+/// </summary>
 public class GenerateSoundDataAssetWindow : EditorWindow
 {
+    //====================================================================
+    // constant
+    //====================================================================
+
     private readonly Vector2 WINDOW_SIZE = new Vector2(300, 150);
+
+    //====================================================================
+    // variable
+    //====================================================================
 
     private string _fileName;
     private Define.Sound.Type _soundType;
 
+    //====================================================================
+    // internal method
+    //====================================================================
+
+    /// <summary>
+    /// 開く際の処理
+    /// SoundSettingToolWindowから呼ばれるので他からは呼ばない
+    /// </summary>
     internal static void Open()
     {
         var window = GetWindow<GenerateSoundDataAssetWindow>();
@@ -21,12 +39,25 @@ public class GenerateSoundDataAssetWindow : EditorWindow
         window.Show();
     }
 
+    //====================================================================
+    // private method
+    //====================================================================
+
+    /// <summary>
+    /// サウンドデータアセットの生成
+    /// </summary>
+    /// <param name="path"></param>
     private void CreateDataAsset(string path)
     {
         var asset = CreateInstance<SoundDataAsset>();
         AssetDatabase.CreateAsset(asset, path);
     }
 
+    /// <summary>
+    /// Editorの更新
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="file_name"></param>
     private void ApplyDataAsset(string path, string file_name)
     {
         var asset = AssetDatabase.LoadAssetAtPath<SoundDataAsset>(path);
@@ -44,6 +75,10 @@ public class GenerateSoundDataAssetWindow : EditorWindow
 
         AssetDatabase.Refresh();
     }
+
+    //====================================================================
+    // unity method
+    //====================================================================
 
     private void OnEnable()
     {

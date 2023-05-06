@@ -1,3 +1,6 @@
+/// <summary>
+/// プロジェクトの定義クラス
+/// </summary>
 public static class Define
 {
     public static class UI

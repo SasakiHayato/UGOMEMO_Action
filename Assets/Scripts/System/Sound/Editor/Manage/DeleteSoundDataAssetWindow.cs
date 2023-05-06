@@ -1,13 +1,23 @@
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using System.Linq;
-using UnityEngine.UIElements;
-using UnityEditor.UIElements;
 using System.IO;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.UIElements;
+using UnityEditor;
+using UnityEditor.UIElements;
 
+/// <summary>
+/// サウンドデータアセットの破棄Windowクラス
+/// </summary>
 public class DeleteSoundDataAssetWindow : EditorWindow
 {
+    //====================================================================
+    // private class
+    //====================================================================
+
+    /// <summary>
+    /// Window表示中データクラス
+    /// </summary>
     private class Data
     {
         public string GUID { get; }
@@ -20,12 +30,28 @@ public class DeleteSoundDataAssetWindow : EditorWindow
         }
     }
 
+    //====================================================================
+    // constant
+    //====================================================================
+
     private readonly Vector2 WINDOW_SIZE = new Vector2(300, 150);
+
+    //====================================================================
+    // variable
+    //====================================================================
 
     private string _fileName;
 
     List<Data> _dataList;
 
+    //====================================================================
+    // internal method
+    //====================================================================
+
+    /// <summary>
+    /// 開く際の処理
+    /// SoundSettingToolWindowから呼ばれるので他からは呼ばない
+    /// </summary>
     internal static void Open()
     {
         var window = GetWindow<DeleteSoundDataAssetWindow>();
@@ -33,6 +59,14 @@ public class DeleteSoundDataAssetWindow : EditorWindow
         window.Show();
     }
 
+    //====================================================================
+    // private method
+    //====================================================================
+
+    /// <summary>
+    /// サウンドデータアセットの破棄
+    /// </summary>
+    /// <param name="guid">削除するサウンドデータアセットのGUID</param>
     private void DeleteDataAsset(string guid)
     {
         var path = AssetDatabase.GUIDToAssetPath(guid);
@@ -40,6 +74,10 @@ public class DeleteSoundDataAssetWindow : EditorWindow
         AssetDatabase.DeleteAsset(path);
     }
 
+    /// <summary>
+    /// Editorの更新
+    /// </summary>
+    /// <param name="guid"></param>
     private void ApplyDataAsset(string guid)
     {
         var data_asset_text_file_path = AssetDatabase.GUIDToAssetPath(EditorDefine.Sound.DATA_ASSET_TEXT_FILE_GUID);
@@ -58,6 +96,10 @@ public class DeleteSoundDataAssetWindow : EditorWindow
 
         AssetDatabase.Refresh();
     }
+
+    //====================================================================
+    // unity method
+    //====================================================================
 
     private void OnEnable()
     {

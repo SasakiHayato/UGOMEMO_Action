@@ -1,3 +1,6 @@
+/// <summary>
+/// Editor’è‹`ƒNƒ‰ƒX
+/// </summary>
 public static class EditorDefine
 {
     public static class Sound

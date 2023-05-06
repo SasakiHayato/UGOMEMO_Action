@@ -1,15 +1,29 @@
 using System.IO;
 using System.Text;
-using UnityEngine;
-using UnityEditor;
-using UnityEngine.UIElements;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.UIElements;
+using UnityEditor;
 
+/// <summary>
+/// サウンドアドレスの発行、破棄Windowクラス
+/// </summary>
 public class SoundAddressToolWindow : EditorWindow
 {
+    //==========================================================================
+    // constant
+    //==========================================================================
+
     private readonly string GENERATE_BUTTON_NAME = "Generate Address";
     private readonly string DELETE_BUTTON_NAME = "Delete Address";
 
+    //==========================================================================
+    // private method
+    //==========================================================================
+
+    /// <summary>
+    /// Unity側から開く際の処理
+    /// </summary>
     [MenuItem("Tools/Sound/AddressTool")]
     private static void Open()
     {
@@ -18,6 +32,9 @@ public class SoundAddressToolWindow : EditorWindow
         window.Show();
     }
 
+    /// <summary>
+    /// アドレスの発行
+    /// </summary>
     private void GenerateAddress()
     {
         var address_text_asset_path = AssetDatabase.GUIDToAssetPath(EditorDefine.Sound.ADDRESS_TEXT_FILE_GUID);
@@ -49,6 +66,9 @@ public class SoundAddressToolWindow : EditorWindow
         AssetDatabase.Refresh();
     }
 
+    /// <summary>
+    /// アドレスの破棄
+    /// </summary>
     private void DeleteAddress()
     {
         var address_text_asset_path = AssetDatabase.GUIDToAssetPath(EditorDefine.Sound.ADDRESS_TEXT_FILE_GUID);
@@ -67,6 +87,9 @@ public class SoundAddressToolWindow : EditorWindow
         AssetDatabase.Refresh();
     }
 
+    /// <summary>
+    /// Editorの更新
+    /// </summary>
     private void ApplyAddress()
     {
         var address_text_file_path = AssetDatabase.GUIDToAssetPath(EditorDefine.Sound.ADDRESS_TEXT_FILE_GUID);
@@ -109,6 +132,10 @@ public class SoundAddressToolWindow : EditorWindow
 
         AssetDatabase.Refresh();
     }
+
+    //==========================================================================
+    // unity method
+    //==========================================================================
 
     private void OnEnable()
     {

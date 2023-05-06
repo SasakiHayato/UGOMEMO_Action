@@ -2,10 +2,24 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// サウンドデータの設定Windowクラス
+/// </summary>
 public class SoundSettingToolWindow : EditorWindow
 {
+    //====================================================================
+    // constant
+    //====================================================================
+
     private readonly Vector2 WINDOW_SIZE = new Vector2(300, 150);
 
+    //====================================================================
+    // private method
+    //====================================================================
+
+    /// <summary>
+    /// Unity側から開く際の処理
+    /// </summary>
     [MenuItem("Tools/Sound/Setting")]
     private static void Open()
     {
@@ -14,6 +28,9 @@ public class SoundSettingToolWindow : EditorWindow
         window.Show();
     }
 
+    /// <summary>
+    /// サウンドデータアセットの生成、破棄用Windowの生成
+    /// </summary>
     private void CreateDataAssetManageWindow()
     {
         var generate_button = new Button(() => GenerateSoundDataAssetWindow.Open());
@@ -27,6 +44,9 @@ public class SoundSettingToolWindow : EditorWindow
         rootVisualElement.Add(delete_button);
     }
 
+    /// <summary>
+    /// サウンドデータアセットの編集用Windowの生成
+    /// </summary>
     private void CreateDataAssetEditWindow()
     {
         var edit_button = new Button(() => EditSoundDataAssetWindow.Open());
@@ -35,6 +55,10 @@ public class SoundSettingToolWindow : EditorWindow
         rootVisualElement.Add(new Label(" Edit\n"));
         rootVisualElement.Add(edit_button);
     }
+
+    //====================================================================
+    // unity method
+    //====================================================================
 
     private void OnEnable()
     {

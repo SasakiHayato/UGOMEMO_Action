@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,8 +5,18 @@ using UnityEngine.UIElements;
 using UnityEditor;
 using UnityEditor.UIElements;
 
+/// <summary>
+/// サウンドデータアセットの編集Windowクラス
+/// </summary>
 public class EditSoundDataAssetWindow : EditorWindow
 {
+    //==========================================================================
+    // private class
+    //==========================================================================
+
+    /// <summary>
+    /// Window表示中データクラス
+    /// </summary>
     private class Data
     {
         public string GUID { get; }
@@ -20,12 +29,24 @@ public class EditSoundDataAssetWindow : EditorWindow
         }
     }
 
+    //==========================================================================
+    // variable
+    //==========================================================================
+
     private bool _canUpdate;
 
     private Editor _editor;
     private SoundDataAsset _asset;
     private List<Data> _dataList;
 
+    //==========================================================================
+    // internal mathod
+    //==========================================================================
+
+    /// <summary>
+    /// 開く際の処理
+    /// 
+    /// </summary>
     internal static void Open()
     {
         var window = GetWindow<EditSoundDataAssetWindow>();
@@ -33,6 +54,14 @@ public class EditSoundDataAssetWindow : EditorWindow
         window.Show();
     }
 
+    //==========================================================================
+    // private method
+    //==========================================================================
+
+    /// <summary>
+    /// 編集するサウンドデータアセットの立ち上げ
+    /// </summary>
+    /// <param name="guid"></param>
     private void SetupEditor(string guid)
     {
         _canUpdate = false;
@@ -46,6 +75,9 @@ public class EditSoundDataAssetWindow : EditorWindow
         _canUpdate = true;
     }
 
+    /// <summary>
+    /// 保存処理
+    /// </summary>
     private void Save()
     {
         if (_asset == null) return;
@@ -54,6 +86,10 @@ public class EditSoundDataAssetWindow : EditorWindow
         _asset.Save();
         AssetDatabase.SaveAssets();
     }
+
+    //==========================================================================
+    // unity method
+    //==========================================================================
 
     private void OnEnable()
     {
