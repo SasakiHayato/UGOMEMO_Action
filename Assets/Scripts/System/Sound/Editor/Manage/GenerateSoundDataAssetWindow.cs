@@ -35,7 +35,7 @@ public class GenerateSoundDataAssetWindow : EditorWindow
         asset.SetGUID(guid);
         asset.SetSoundType(_soundType);
 
-        var data_asset_file_path = AssetDatabase.GUIDToAssetPath(Editor.Sound.DATA_ASSET_TEXT_FILE_GUID);
+        var data_asset_file_path = AssetDatabase.GUIDToAssetPath(EditorDefine.Sound.DATA_ASSET_TEXT_FILE_GUID);
         var encode = System.Text.Encoding.GetEncoding("UTF-8");
         using (var stream_writer = new StreamWriter(data_asset_file_path, true, encode))
         {
@@ -88,7 +88,7 @@ public class GenerateSoundDataAssetWindow : EditorWindow
         var generate_button = new Button(() => 
         {
             var file_name = _fileName != "" ? _fileName : "New Sound Data Asset";
-            var path = Editor.Sound.PATH + $"{file_name}.asset";
+            var path = EditorDefine.Sound.PATH + $"{file_name}.asset";
 
             CreateDataAsset(path);
             ApplyDataAsset(path, file_name);

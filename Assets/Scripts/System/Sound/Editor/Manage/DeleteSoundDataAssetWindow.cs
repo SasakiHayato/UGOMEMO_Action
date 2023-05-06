@@ -42,7 +42,7 @@ public class DeleteSoundDataAssetWindow : EditorWindow
 
     private void ApplyDataAsset(string guid)
     {
-        var data_asset_text_file_path = AssetDatabase.GUIDToAssetPath(Editor.Sound.DATA_ASSET_TEXT_FILE_GUID);
+        var data_asset_text_file_path = AssetDatabase.GUIDToAssetPath(EditorDefine.Sound.DATA_ASSET_TEXT_FILE_GUID);
 
         var string_builder = new System.Text.StringBuilder();
         _dataList.ForEach(data => 
@@ -66,7 +66,7 @@ public class DeleteSoundDataAssetWindow : EditorWindow
         minSize = WINDOW_SIZE;
         maxSize = WINDOW_SIZE;
 
-        var data_asset_text_file_path = AssetDatabase.GUIDToAssetPath(Editor.Sound.DATA_ASSET_TEXT_FILE_GUID);
+        var data_asset_text_file_path = AssetDatabase.GUIDToAssetPath(EditorDefine.Sound.DATA_ASSET_TEXT_FILE_GUID);
         var data_asset_text_file = AssetDatabase.LoadAssetAtPath<TextAsset>(data_asset_text_file_path);
 
         if (data_asset_text_file.text != null)

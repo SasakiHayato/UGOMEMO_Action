@@ -50,32 +50,14 @@ public class SoundDataAsset : ScriptableObject
         // variable
         //=======================================================
 
-        [SerializeField, ReadOnly] AudioClip _audioClip;
         [SerializeField, ReadOnly] SoundAddress _address;
-        [SerializeField, ReadOnly, Range(0, 1)] private float _volume;
-        [SerializeField, ReadOnly, Range(-3, 3)] private float _pitch;
+        [SerializeField] AudioClip _audioClip;
+        [SerializeField, Range(0, 1)] private float _volume;
+        [SerializeField, Range(-3, 3)] private float _pitch;
 
         //=======================================================
         // constructor
         //=======================================================
-
-        #if UNITY_EDITOR
-
-        public AudioClip SetClip { set => _audioClip = value; }
-        public SoundAddress SetAddress { set => _address = value; }
-
-        ///// <summary>
-        ///// データ生成用の初期化
-        ///// </summary>
-        ///// <param name="clip"></param>
-        ///// <param name="address"></param>
-        //public Data(AudioClip clip, SoundAddress address)
-        //{
-        //    _audioClip = clip;
-        //    _address = address;
-        //}
-
-        #endif
 
         //=======================================================
         // IReadOnlySoundData interface
@@ -85,6 +67,13 @@ public class SoundDataAsset : ScriptableObject
         SoundAddress IReadOnlySoundData.Address => _address;
         float IReadOnlySoundData.Volume => _volume;
         float IReadOnlySoundData.Pitch => _pitch;
+
+        #if UNITY_EDITOR
+        public void SetSoundAddress(SoundAddress address)
+        {
+            _address = address;
+        }
+        #endif
     }
 
     [SerializeField, ReadOnly] string _guid;
@@ -106,14 +95,11 @@ public class SoundDataAsset : ScriptableObject
         return null;
     }
 
-    private List<Data> _dataList;
-
     //=======================================================
     // editor method
     //=======================================================
 
     #if UNITY_EDITOR
-
     public void SetGUID(string guid)
     {
         _guid = guid;
@@ -129,5 +115,24 @@ public class SoundDataAsset : ScriptableObject
         _soundType = sound_type;
     }
 
+    public void Save()
+    {
+        if (_soundDataList == null) return;
+        if (_soundDataList.Count == 0) return;
+
+        _soundDataList.ForEach(data => 
+        {
+            var read_only_data = data as IReadOnlySoundData;
+            for (int index = 0; index < (int)SoundAddress.Length; index++)
+            {
+                var address = (SoundAddress)index;
+                if (address.ToString() == read_only_data.Clip.name)
+                {
+                    data.SetSoundAddress(address);
+                    break;
+                }
+            }
+        });
+    }
     #endif
 }

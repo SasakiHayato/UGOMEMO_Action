@@ -1,4 +1,4 @@
-public static class Editor
+public static class EditorDefine
 {
     public static class Sound
     {
