@@ -27,4 +27,6 @@ public class Test_Object : MonoBehaviour, IInputRayCastAddress
     Define.ObjectType IInputRayCastAddress.ObjectType => _objectType;
 
     Vector2 IInputRayCastAddress.Position => transform.position;
+
+    public ICharacterBehaviour Character => throw new System.NotImplementedException();
 }

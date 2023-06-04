@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : CharacterBase
 {
-    public override void AddDamage(int damage)
+    protected override void AddDamage(int damage)
     {
         if (_hp > damage)
         {

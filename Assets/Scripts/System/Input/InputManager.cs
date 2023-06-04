@@ -7,6 +7,8 @@ public interface IInputRayCastAddress
 {
     int ID { get; set; }
     Define.ObjectType ObjectType { get; }
+
+    ICharacterBehaviour Character{ get; }
     Vector2 Position { get; }
 }
 

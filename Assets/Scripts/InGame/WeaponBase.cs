@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using DG.Tweening;
 
 
 public class WeaponBase : MonoBehaviour
@@ -9,30 +11,29 @@ public class WeaponBase : MonoBehaviour
     int _normalAttackPower = 50;
     [SerializeField]
     int _specialAttackPower = 100;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    float _dropPosY = 0;
+    [SerializeField]
+    float _dropAngle = 0;
+    [SerializeField]
+    float _dropDuraration = 0.5f;
+
+    [SerializeField]
+    UnityEvent _onDrop = null;
+
+    public virtual int NormalAttack()
     {
-        
+        return _normalAttackPower;
     }
-
-    // Update is called once per frame
-    void Update()
+    public virtual int SpecialAttack()
     {
-        
-    }
-
-    public virtual void NormalAttack()
-    {
-
-    }
-    public virtual void SpecialAttack()
-    {
-
+        return _specialAttackPower;
     }
 
     public virtual void DropWeapon()
     {
-
+        _onDrop?.Invoke();
+        SetWeaponState(WeaponState.OnGround);
     }
 
     public void SetWeaponState(WeaponState state)
@@ -42,9 +43,23 @@ public class WeaponBase : MonoBehaviour
             case WeaponState.InEnemy:
                 break;
             case WeaponState.OnGround:
+                ReleaseHoldPos();
+                transform.DOMoveY(_dropPosY, _dropDuraration);
+                transform.DORotate(Vector3.forward * _dropAngle, _dropDuraration);
                 break;
             case WeaponState.InPlayer:
                 break;
         }
+    }
+
+    public void SetHoldPos(Transform parent)
+    {
+        transform.position = Vector3.zero;
+        transform.SetParent(parent);
+    }
+
+    public void ReleaseHoldPos()
+    {
+        transform.SetParent(null);
     }
 }
