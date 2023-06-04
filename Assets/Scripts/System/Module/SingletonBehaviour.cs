@@ -44,7 +44,7 @@ public abstract class SingletonBehaviour<Class> : System.IDisposable, ILoader wh
     /// SceneLoad‚Ìˆ—
     /// UnityEngine.Start()
     /// </summary>
-    protected virtual void OnLoad() { }
+    protected virtual System.Collections.IEnumerator OnLoad() { yield return null; }
 
     /// <summary>
     /// Scene”jŠü‚Ìˆ—
@@ -72,9 +72,9 @@ public abstract class SingletonBehaviour<Class> : System.IDisposable, ILoader wh
     // ILoader interface
     //================================================
 
-    void ILoader.OnLoad()
+    System.Collections.IEnumerator ILoader.OnLoad()
     {
-        OnLoad();
+        yield return OnLoad();
     }
 
     void ILoader.UnLoad()

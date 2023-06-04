@@ -12,7 +12,7 @@ namespace PoolSystem.Event
         /// <summary>
         /// 表示、非表示のたびに呼ばれる
         /// </summary>
-        /// <param name="is_active">[TRUE] 表示, [FALSE] 非表示</param>
+        /// <param name="is_active">[TRUE: 表示][FALSE: 非表示]</param>
         void Active(bool is_active);
     }
 
@@ -160,78 +160,6 @@ namespace PoolSystem
         private readonly Transform _parent;
 
         //========================================================
-        // property
-        //========================================================
-
-        /// <summary>
-        /// 現在のオブジェクト最大数
-        /// </summary>
-        public int PoolCount => _poolDataList.Count;
-
-        /// <summary>
-        /// 使用中のオブジェクト数
-        /// </summary>
-        public int UsingPoolCount
-        {
-            get
-            {
-                int count = 0;
-
-                foreach (var data in _poolDataList)
-                {
-                    if (data.Memory == MemoryType.Heap)
-                    {
-                        count++;
-                    }
-                }
-
-                return count;
-            }
-        }
-
-        /// <summary>
-        /// 解放されているオブジェクト数
-        /// </summary>
-        public int ReleasePoolCount
-        {
-            get
-            {
-                int count = 0;
-
-                foreach (var data in _poolDataList)
-                {
-                    if (data.Memory == MemoryType.Release)
-                    {
-                        count++;
-                    }
-                }
-
-                return count;
-            }
-        }
-
-        /// <summary>
-        /// 使用待機中のオブジェクト数
-        /// </summary>
-        public int WaitPoolCount
-        {
-            get
-            {
-                int count = 0;
-
-                foreach (var data in _poolDataList)
-                {
-                    if (data.Memory == MemoryType.Wait)
-                    {
-                        count++;
-                    }
-                }
-
-                return count;
-            }
-        }
-
-        //========================================================
         // variable
         //========================================================
 
@@ -249,12 +177,13 @@ namespace PoolSystem
         public Pool(PooledObject pooled_object, int capacity = CAPACITY)
         {
             _parent = new GameObject("Pool_Stock").transform;
-            _parent.hideFlags = HideFlags.HideInHierarchy;
+            //_parent.hideFlags = HideFlags.HideInHierarchy;
 
             List<Data> list = new List<Data>(capacity);
             for (int index = 0; index < capacity; index++)
             {
                 var clone = Object.Instantiate(pooled_object);
+                clone.name = $"{pooled_object.name}_{_poolID}";
                 clone.Initialize(this, _poolID);
                 clone.transform.SetParent(_parent);
                 list.Add(new Data(clone, _poolID));
@@ -281,7 +210,6 @@ namespace PoolSystem
             for (int index = 0; index < _poolDataList.Count; index++)
             {
                 var data = _poolDataList[index];
-
                 if (data.Memory != MemoryType.Release) continue;
                 data.Memory = MemoryType.Wait;
 
@@ -317,21 +245,6 @@ namespace PoolSystem
         {
             var data = Get();
             Set(data.ID);
-        }
-
-        /// <summary>
-        /// 使用待機中、使用中のオブジェクトを強制的に解放する.
-        /// 非推奨.
-        /// </summary>
-        public void ForceRelease()
-        {
-            for (int index = 0; index < _poolDataList.Count; index++)
-            {
-                var data = _poolDataList[index];
-                if (data.Memory == MemoryType.Release) return;
-                data.Object.Release();
-                data.Memory = MemoryType.Release;
-            }
         }
 
         //========================================================
