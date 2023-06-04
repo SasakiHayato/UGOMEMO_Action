@@ -12,4 +12,9 @@ public static class EditorDefine
         public static string ADDRESS_TEXT_FILE_GUID = "0bd26e639ee380f42a6e2aac7808099e";
         public static string ADDRESS_CSHARP_GUID = "6d28f0e86ba601649b447b1fc2276ce7";
     }
+
+    public static class Achievement
+    {
+        public static string PATH = "Assets/Data/Ahievemnt/DataAsset/";
+    }
 }
