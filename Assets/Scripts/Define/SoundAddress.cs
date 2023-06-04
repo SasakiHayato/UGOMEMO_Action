@@ -7,6 +7,7 @@
 /// <summary>
 public enum SoundAddress
 {
+    BGM_Sample,
     None,
 
     Length

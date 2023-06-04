@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class GameSceneController : SceneBase
 {
-    protected override void Setup()
+    protected override System.Collections.IEnumerator Setup()
     {
-        
+        yield return null;
     }
 }

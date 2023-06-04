@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -9,7 +8,7 @@ public interface ILoader
     /// <summary>
     /// シーン立ち上げ時の処理
     /// </summary>
-    void OnLoad();
+    System.Collections.IEnumerator OnLoad();
 
     /// <summary>
     /// シーン破棄時の処理
@@ -24,12 +23,6 @@ public interface ILoader
 public abstract class SceneBase : MonoBehaviour, ILoader
 {
     //=================================================
-    // variable
-    //=================================================
-
-    private List<ILoader> _loadList;
-
-    //=================================================
     // protected method
     //=================================================
 
@@ -37,7 +30,7 @@ public abstract class SceneBase : MonoBehaviour, ILoader
     /// シーン立ち上げ時の処理.
     /// UnityEngine.Start()
     /// </summary>
-    protected abstract void Setup();
+    protected abstract System.Collections.IEnumerator Setup();
 
     /// <summary>
     /// マイフレームの処理.
@@ -55,9 +48,9 @@ public abstract class SceneBase : MonoBehaviour, ILoader
     // ILoader interface
     //=================================================
 
-    void ILoader.OnLoad()
+    System.Collections.IEnumerator ILoader.OnLoad()
     {
-        Setup();
+        yield return Setup();
     }
 
     void ILoader.UnLoad()
@@ -71,25 +64,19 @@ public abstract class SceneBase : MonoBehaviour, ILoader
 
     private void Awake()
     {
-        _loadList = new List<ILoader>();
+        var game_local_data = new GameLocalData() as ILoader;
+        var sound_manager = new SoundManager() as ILoader;
+        var input_manager = new InputManager() as ILoader;
+        var scene = this as ILoader;
 
-        new GameLocalData();
-        _loadList.Add(new InputManager());
-        _loadList.Add(this);
-    }
-
-    private void Start()
-    {
-        _loadList.ForEach(l => l.OnLoad());
+        StartCoroutine(game_local_data.OnLoad());
+        StartCoroutine(sound_manager.OnLoad());
+        StartCoroutine(input_manager.OnLoad());
+        StartCoroutine(scene.OnLoad());
     }
 
     private void Update()
     {
         UpdateEvent();
-    }
-
-    private void OnDestroy()
-    {
-        _loadList.ForEach(l => l.UnLoad());
     }
 }

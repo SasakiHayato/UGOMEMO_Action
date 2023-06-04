@@ -39,8 +39,6 @@ public static class Define
             Length,
         }
         
-        public static string SOUNDER_RESOURCE_PATH = "Sound/Pre_Sounder";
-
         public static float MAX_VOLUME = 1;
     }
 
