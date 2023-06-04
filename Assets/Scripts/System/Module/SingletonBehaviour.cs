@@ -1,8 +1,9 @@
+using System.Collections;
 /// <summary>
 /// 単一のClassを保証するためのクラス
 /// </summary>
 /// <typeparam name="Class">対象クラス</typeparam>
-public abstract class SingletonBehaviour<Class> : System.IDisposable where Class : SingletonBehaviour<Class>
+public abstract class SingletonBehaviour<Class> : System.IDisposable, ILoader where Class : SingletonBehaviour<Class>
 {
     //================================================
     // variable
@@ -68,5 +69,13 @@ public abstract class SingletonBehaviour<Class> : System.IDisposable where Class
         Dispose();
     }
 
-    
+    IEnumerator ILoader.OnLoad()
+    {
+        yield return OnLoad();
+    }
+
+    void ILoader.UnLoad()
+    {
+        UnLoad();
+    }
 }
