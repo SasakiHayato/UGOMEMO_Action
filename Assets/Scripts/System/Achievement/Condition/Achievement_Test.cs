@@ -1,8 +1,8 @@
-public class Achievement_Test : IAchievement<int>
+public class Achievement_Test : IAchievement
 {
-    private int _a;
+    int _value;
 
-    int IAchievement<int>.SendValue { set => _a = value; }
+    int IAchievement.Value { set => _value = value; }
 
     Achievement_Enum IAchievement.Type => Achievement_Enum.Test;
 
