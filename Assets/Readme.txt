@@ -18,12 +18,21 @@ Assets/
           └ Sprite/
 
 
+------コピペ用-------
+
+├ ┤
+│ ─ 
+┌  ┐
+└  ┘
+
+
+-----------
+このプロジェクトでは全てモデルごとに分けてください。
 
 ・UGOMEMO
 　　・Scenes   - 各シーン
 　　・Scripts  - スクリプト
 　　・Test     - テスト用のあれこれ 
-　　　　　　　　　　info. テスト関連は、機能ごとにフォルダーを作成してまとめる
 
 
 ・UGOMEMO_Master
@@ -35,11 +44,8 @@ Assets/
 
 ・UGOMEMO_Resource
     ・Animation  - アニメーション関連 
-                    info. (Animator, Animation)
-
     ・Prefabs    - プレファブ
     ・Sprite     - スプライト
-
 
 
 -------------------------------------
